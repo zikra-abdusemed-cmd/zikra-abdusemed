@@ -1,12 +1,13 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
-import { copyFile, mkdir, readFile, rename, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { Activity, Project, ProjectCategoryId, ProjectImage, SiteContent, SkillCategory, SoftSkill } from "./types";
 
 /**
  * JSON-file content store.
- * - data/content.json holds live content; it is created from data/seed.json on first read.
+ * - data/content.json holds live content; when it doesn't exist, data/seed.json is read directly.
+ *   Reading the seed directly keeps the public site compatible with read-only serverless filesystems.
  * - Writes are serialized through a promise queue and written atomically (tmp file + rename)
  *   so concurrent admin edits can't interleave or leave a half-written file.
  */
@@ -14,13 +15,12 @@ const DATA_DIR = process.env.CONTENT_DIR ?? path.join(process.cwd(), "data");
 const CONTENT_FILE = path.join(DATA_DIR, "content.json");
 const SEED_FILE = path.join(process.cwd(), "data", "seed.json");
 
-async function ensureContentFile() {
+async function readContentFile(): Promise<Partial<SiteContent>> {
   try {
-    await readFile(CONTENT_FILE);
+    return JSON.parse(await readFile(CONTENT_FILE, "utf8")) as Partial<SiteContent>;
   } catch (err) {
     if ((err as NodeJS.ErrnoException).code !== "ENOENT") throw err;
-    await mkdir(DATA_DIR, { recursive: true });
-    await copyFile(SEED_FILE, CONTENT_FILE);
+    return JSON.parse(await readFile(SEED_FILE, "utf8")) as Partial<SiteContent>;
   }
 }
 
@@ -32,8 +32,7 @@ function normalizeProject(raw: Project & { image?: string }): Project {
 }
 
 export async function getContent(): Promise<SiteContent> {
-  await ensureContentFile();
-  const parsed = JSON.parse(await readFile(CONTENT_FILE, "utf8")) as Partial<SiteContent>;
+  const parsed = await readContentFile();
   // Sections added after the content file was created fall back to the sample data until first edited.
   let seed: Partial<SiteContent> | null = null;
   const fallback = async <K extends keyof SiteContent>(key: K): Promise<SiteContent[K]> => {
@@ -53,9 +52,13 @@ let writeQueue: Promise<unknown> = Promise.resolve();
 
 function mutate<T>(fn: (content: SiteContent) => T): Promise<T> {
   const run = async () => {
+    if (process.env.VERCEL) {
+      throw new Error("Admin edits need persistent database storage. The public site is using the bundled seed content.");
+    }
     const content = await getContent();
     const result = fn(content);
     const tmp = `${CONTENT_FILE}.${process.pid}.${Date.now()}.tmp`;
+    await mkdir(DATA_DIR, { recursive: true });
     await writeFile(tmp, JSON.stringify(content, null, 2), "utf8");
     await rename(tmp, CONTENT_FILE);
     return result;
