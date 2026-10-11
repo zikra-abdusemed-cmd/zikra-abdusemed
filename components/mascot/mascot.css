@@ -1,0 +1,229 @@
+/* ------------------------------------------------------------------
+   Mini Zikra: layout
+   ------------------------------------------------------------------ */
+.mascot-root {
+  --s: 1;
+  /* the root sits at her feet; everything else is positioned upward from it */
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 45; /* above content, below the nav (50) and cursor */
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.mascot-btn {
+  position: absolute;
+  bottom: 0;
+  left: -60px;
+  width: 120px;
+  height: 170px;
+  padding: 0;
+  border: 0;
+  background: none;
+  pointer-events: auto;
+  cursor: pointer;
+  transform: scale(var(--s));
+  transform-origin: 50% 100%;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none; /* so she can be dragged on touch screens */
+}
+.mascot-btn:focus-visible {
+  outline: 3px solid var(--color-plum);
+  outline-offset: 4px;
+  border-radius: 16px;
+}
+.mascot-btn svg {
+  display: block;
+  overflow: visible;
+}
+.mascot-hop {
+  transform-origin: 50% 100%;
+}
+.mascot-flip {
+  transform-origin: 50% 50%;
+}
+
+/* ------------------------------------------------------------------
+   Comic speech bubble
+   ------------------------------------------------------------------ */
+.mascot-bubble {
+  --tail: 40px;
+  position: absolute;
+  left: 0;
+  bottom: calc(var(--s) * 146px + 16px);
+  width: max-content;
+  max-width: min(260px, calc(100vw - 20px));
+  padding: 0.55rem 0.9rem 0.6rem;
+  border: 2.5px solid var(--color-ink);
+  border-radius: 16px;
+  background: var(--color-card);
+  box-shadow: 4px 4px 0 0 var(--color-ink);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  color: var(--color-ink);
+  pointer-events: auto;
+  transform-origin: var(--tail) 100%;
+  animation: bubble-pop 380ms var(--ease-bounce) both;
+}
+.mascot-bubble.is-intro {
+  max-width: min(320px, calc(100vw - 20px));
+  font-size: 1.35rem;
+  padding: 0.75rem 1.1rem 0.5rem;
+}
+/* near the top of the screen the bubble drops below her feet instead */
+.mascot-bubble[data-below="true"] {
+  bottom: auto;
+  top: 14px;
+  transform-origin: var(--tail) 0;
+}
+.mascot-bubble[data-below="true"]::after {
+  bottom: auto;
+  top: -9px;
+  transform: rotate(225deg) skew(10deg, 10deg);
+}
+/* tail */
+.mascot-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -9px;
+  left: calc(var(--tail) - 8px);
+  width: 15px;
+  height: 15px;
+  background: var(--color-card);
+  border-right: 2.5px solid var(--color-ink);
+  border-bottom: 2.5px solid var(--color-ink);
+  transform: rotate(45deg) skew(10deg, 10deg);
+}
+.mascot-skip {
+  display: block;
+  margin: 0.2rem 0 0 auto;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+}
+.mascot-skip:hover {
+  color: var(--color-plum);
+}
+@keyframes bubble-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.5) rotate(-4deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-1.2deg);
+  }
+}
+
+/* hearts that float up when she's clicked */
+.mascot-heart {
+  position: absolute;
+  left: calc(var(--dx) - 9px);
+  bottom: calc(var(--s) * 120px);
+  pointer-events: none;
+  animation: heart-float 1s ease-out forwards;
+}
+@keyframes heart-float {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(0.4);
+  }
+  30% {
+    transform: translateY(-20px) scale(1.15);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-70px) scale(0.9) rotate(12deg);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Body parts
+   The body, head, arms, legs, abaya and hijab drape are animated by the
+   physics rig in rig.ts, which writes SVG transform/d attributes each frame.
+   NEVER give those elements (.m-body, .m-head, .m-arm-*, .m-leg-*, .m-panel-*)
+   a CSS transform, transform-origin or animation: it fights the rig and makes
+   limbs detach. CSS only animates small inner details and wrappers.
+   ------------------------------------------------------------------ */
+.mascot-root svg * {
+  transform-box: view-box; /* origin 0 0, same as SVG transform attributes */
+}
+
+/* blink + talk */
+.mascot-root .m-eyes {
+  transform-origin: 60px 57px;
+  animation: m-blink 4.6s infinite;
+}
+.mascot-root .m-talk {
+  transform-origin: 60px 68px;
+  animation: m-talk 0.2s ease-in-out infinite alternate;
+}
+.mascot-root .m-anger {
+  transform-origin: 86px 27px;
+  animation: m-throb 0.5s ease-in-out infinite alternate;
+}
+
+/* idle life that keeps going while the physics loop sleeps (wrappers the rig never touches) */
+.mascot-root .m-breathe {
+  transform-origin: 60px 160px;
+  animation: m-breathe 2.6s ease-in-out infinite;
+}
+.mascot-root .m-head-sway {
+  transform-origin: 60px 88px;
+  animation: m-sway 3.6s ease-in-out infinite;
+}
+
+/* speed lines during the Naruto run */
+.mascot-root .m-speed {
+  display: none;
+}
+.mascot-root[data-pose="dash"] .m-speed {
+  display: inline;
+}
+.mascot-root[data-pose="dash"] .m-speed path {
+  animation: m-speed 0.3s linear infinite;
+}
+.mascot-root[data-pose="dash"] .m-speed path:nth-child(2) { animation-delay: -0.1s; }
+.mascot-root[data-pose="dash"] .m-speed path:nth-child(3) { animation-delay: -0.2s; }
+.mascot-root[data-pose="dash"] .m-speed path:nth-child(4) { animation-delay: -0.05s; }
+
+/* no ground shadow while she's in the air */
+.mascot-root .m-shadow {
+  transition: opacity 150ms ease;
+}
+.mascot-root[data-pose="held"] .m-shadow,
+.mascot-root[data-pose="fall"] .m-shadow {
+  opacity: 0;
+}
+
+@keyframes m-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  94% { transform: scaleY(0.1); }
+  96% { transform: scaleY(1); }
+}
+@keyframes m-talk {
+  from { transform: scaleY(0.45); }
+  to { transform: scaleY(1.1); }
+}
+@keyframes m-throb {
+  from { transform: scale(0.85); }
+  to { transform: scale(1.15); }
+}
+@keyframes m-breathe {
+  50% { transform: translateY(0.8px) scaleY(0.99); }
+}
+@keyframes m-sway {
+  50% { transform: rotate(-2.5deg); }
+}
+@keyframes m-speed {
+  from { transform: translateX(8px); opacity: 0; }
+  30% { opacity: 1; }
+  to { transform: translateX(-14px); opacity: 0; }
+}

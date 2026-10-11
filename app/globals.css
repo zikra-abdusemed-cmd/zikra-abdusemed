@@ -1,0 +1,475 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design tokens
+   ------------------------------------------------------------------ */
+@theme {
+  /* Black & white theme. Token names are historical (plum = primary, sage/clay/sand = category tints). */
+  --color-ink: #0e0e0e;
+  --color-paper: #f5f5f5;
+  --color-card: #ffffff;
+  --color-mauve: #e9e9e9; /* hover fill */
+  --color-plum: #0e0e0e; /* primary: black */
+  --color-sage: #e2e2e2; /* light grey */
+  --color-clay: #cfcfcf; /* mid grey */
+  --color-sand: #efefef; /* pale grey */
+  --color-muted: #555555;
+
+  --font-display: var(--font-display-face), ui-serif, Georgia, serif;
+  --font-sans: var(--font-body-face), ui-serif, Georgia, serif; /* body text (a serif; the token name is historical) */
+
+  --shadow-brutal-sm: 3px 3px 0 0 var(--color-ink);
+  --shadow-brutal: 5px 5px 0 0 var(--color-ink);
+  --shadow-brutal-lg: 9px 9px 0 0 var(--color-ink);
+
+  --ease-snap: cubic-bezier(0.77, 0, 0.18, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-sage);
+  color: var(--color-ink);
+}
+
+/* ------------------------------------------------------------------
+   Fixed noise backdrop — its own compositor layer, never repaints on scroll
+   ------------------------------------------------------------------ */
+.noise-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--color-paper);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.15  0 0 0 0 0.15  0 0 0 0 0.15  0 0 0 0.3 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
+  opacity: 0.55;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* faint grid that sits on top of the grain for a "clean grid" feel */
+.noise-layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgb(14 14 14 / 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(14 14 14 / 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ------------------------------------------------------------------
+   Outline design system
+   ------------------------------------------------------------------ */
+@utility brutal-border {
+  border: 2.5px solid var(--color-ink);
+}
+
+@utility brutal-box {
+  border: 2.5px solid var(--color-ink);
+  border-radius: 14px;
+  background-color: var(--color-card);
+  box-shadow: var(--shadow-brutal);
+}
+
+@utility brutal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 2.5px solid var(--color-ink);
+  border-radius: 999px;
+  padding: 0.6rem 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  background-color: var(--color-card);
+  box-shadow: var(--shadow-brutal-sm);
+  transition:
+    transform 160ms var(--ease-bounce),
+    box-shadow 160ms var(--ease-bounce),
+    background-color 160ms ease;
+  &:hover:not(:disabled) {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-brutal);
+  }
+  &:active:not(:disabled) {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 0 var(--color-ink);
+  }
+  &:disabled,
+  &[aria-disabled="true"] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  &:focus-visible {
+    outline: 3px solid var(--color-plum);
+    outline-offset: 3px;
+  }
+}
+
+@utility brutal-input {
+  width: 100%;
+  border: 2.5px solid var(--color-ink);
+  border-radius: 10px;
+  background-color: var(--color-card);
+  padding: 0.6rem 0.8rem;
+  font-size: 0.95rem;
+  &:focus {
+    outline: none;
+    box-shadow: var(--shadow-brutal-sm);
+    background-color: #fff;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Project card tactile hover
+   ------------------------------------------------------------------ */
+.project-card {
+  --tilt: -1.4deg;
+  transition:
+    transform 260ms var(--ease-bounce),
+    box-shadow 260ms var(--ease-bounce),
+    border-color 200ms ease;
+}
+.project-card:nth-child(even) {
+  --tilt: 1.4deg;
+}
+.project-card:hover,
+.project-card:focus-within {
+  transform: translate(-4px, -4px) rotate(var(--tilt));
+  box-shadow: 10px 10px 0 0 var(--accent, var(--color-plum)),
+    10px 10px 0 2.5px var(--color-ink);
+}
+.project-card .card-arrow {
+  transition: transform 260ms var(--ease-bounce);
+}
+.project-card:hover .card-arrow {
+  transform: translate(3px, -3px) rotate(-8deg);
+}
+
+/* ------------------------------------------------------------------
+   Scroll reveals (clip-path + skew). Only hide content when JS is running.
+   ------------------------------------------------------------------ */
+.js [data-reveal] {
+  transition:
+    clip-path 950ms var(--ease-snap),
+    transform 950ms var(--ease-snap);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.js [data-reveal="rise"] {
+  clip-path: inset(0 0 100% 0);
+  transform: translateY(2.5rem) skewY(5deg);
+}
+.js [data-reveal="wipe"] {
+  clip-path: inset(0 100% 0 0);
+  transform: skewX(-6deg);
+}
+.js [data-reveal="shutter"] {
+  clip-path: inset(50% 0 50% 0);
+  transform: scaleY(0.85) skewY(-3deg);
+}
+/* negative inset so brutal shadows/rotations are not clipped once revealed */
+.js [data-reveal].is-revealed {
+  clip-path: inset(-3rem -3rem -3rem -3rem);
+  transform: none;
+}
+
+/* ------------------------------------------------------------------
+   Hero letter intro
+   ------------------------------------------------------------------ */
+.hero-letter {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.08em;
+}
+.hero-letter > span {
+  display: inline-block;
+  transform: translateY(115%) rotate(12deg);
+  animation: letter-in 900ms var(--ease-snap) forwards;
+  animation-delay: calc(var(--i) * 45ms + 150ms);
+}
+@keyframes letter-in {
+  to {
+    transform: translateY(0) rotate(0);
+  }
+}
+
+.hero-fade {
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  animation: wipe-in 900ms var(--ease-snap) forwards;
+  animation-delay: var(--d, 700ms);
+}
+@keyframes wipe-in {
+  to {
+    opacity: 1;
+    clip-path: inset(-1rem -1rem -1rem -1rem);
+  }
+}
+
+.spin-slow {
+  animation: spin 18s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.float-y {
+  animation: float-y 5s ease-in-out infinite;
+}
+@keyframes float-y {
+  50% {
+    transform: translateY(-12px) rotate(4deg);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Marquee
+   ------------------------------------------------------------------ */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Custom cursor
+   ------------------------------------------------------------------ */
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none !important;
+}
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+}
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 999px;
+  background: var(--color-ink);
+}
+.cursor-ring {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+}
+.cursor-ring-shape {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--color-ink);
+  border-radius: 999px;
+  transition:
+    transform 320ms var(--ease-bounce),
+    border-radius 320ms var(--ease-bounce),
+    background-color 200ms ease;
+}
+.cursor-ring-label {
+  grid-area: 1 / 1;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 200ms ease,
+    transform 320ms var(--ease-bounce);
+}
+/* hovering a link/button: ring becomes a filled rotated square */
+.cursor-ring[data-state="hover"] .cursor-ring-shape {
+  transform: scale(1.35) rotate(45deg);
+  border-radius: 6px;
+  background-color: rgb(14 14 14 / 0.12);
+}
+/* hovering something with a label: ring becomes a big sage blob with text */
+.cursor-ring[data-state="label"] .cursor-ring-shape {
+  transform: scale(2.1);
+  background-color: var(--color-sage);
+}
+.cursor-ring[data-state="label"] .cursor-ring-label {
+  opacity: 1;
+  transform: scale(1);
+}
+/* over mini Zikra: shrink out of the way so she stays visible */
+.cursor-ring[data-state="mini"] .cursor-ring-shape {
+  transform: scale(0.45);
+  background-color: var(--color-card);
+}
+.cursor-ring[data-state="down"] .cursor-ring-shape {
+  transform: scale(0.7);
+}
+.cursor-dot[data-hidden="true"],
+.cursor-ring[data-hidden="true"] {
+  opacity: 0;
+}
+
+/* ------------------------------------------------------------------
+   Reduced motion: everything visible, nothing moves
+   ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .js [data-reveal] {
+    clip-path: none !important;
+    transform: none !important;
+  }
+  .hero-letter > span,
+  .hero-fade {
+    transform: none;
+    opacity: 1;
+    clip-path: none;
+    animation: none;
+  }
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Nav: slides down on load; mobile menu card drops open with a clip wipe
+   ------------------------------------------------------------------ */
+.nav-enter {
+  animation: nav-enter 700ms var(--ease-snap) both;
+}
+@keyframes nav-enter {
+  from {
+    transform: translateY(-140%);
+  }
+}
+.menu-drop {
+  animation: menu-drop 380ms var(--ease-snap) both;
+}
+@keyframes menu-drop {
+  from {
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-6px) rotate(-1deg);
+  }
+  to {
+    clip-path: inset(-2rem -2rem -2rem -2rem);
+  }
+}
+
+/* Current-section indicator: thin plum underline that draws in */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0.875rem;
+  right: 0.875rem;
+  bottom: 0.2rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-plum);
+  transform: scaleX(0);
+  transition: transform 350ms var(--ease-snap);
+}
+.nav-link[aria-current="location"]::after {
+  transform: scaleX(1);
+}
+
+/* Soft skill tiles: sit at a slight tilt, straighten up and pop on hover */
+.soft-tile {
+  transform: rotate(var(--tilt, 0deg));
+  transition:
+    transform 260ms var(--ease-bounce),
+    box-shadow 260ms var(--ease-bounce);
+}
+.soft-tile:hover {
+  transform: rotate(0deg) translate(-3px, -3px);
+  box-shadow: var(--shadow-brutal-lg);
+}
+
+/* Hero status dot: a soft ping ring */
+.status-ping {
+  animation: status-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes status-ping {
+  75%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* Project photo gallery arrows: appear on hover/focus (always visible on touch screens) */
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid var(--color-ink);
+  border-radius: 999px;
+  background: var(--color-card);
+  font-weight: 700;
+  line-height: 1;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 160ms ease, background-color 160ms ease;
+}
+.gallery-arrow:hover {
+  background: var(--color-mauve);
+}
+.group\/gallery:hover .gallery-arrow,
+.group\/gallery:focus-within .gallery-arrow {
+  opacity: 1;
+}
+@media (hover: none) {
+  .gallery-arrow {
+    opacity: 1;
+  }
+}
+
+/* small display text gets a little more weight so it holds up at card-title sizes */
+h3.font-display {
+  font-weight: 600;
+}
+dd.font-display,
+span.font-display,
+a.font-display {
+  font-weight: 600;
+}

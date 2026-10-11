@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+.env*.local
+.env
+# live content store (seeded from data/seed.json on first run)
+data/content.json
+*.tsbuildinfo
+next-env.d.ts
+# uploaded project photos (live content, like content.json)
+data/uploads/
+data/content.backup-*.json

@@ -1,0 +1,172 @@
+{
+  "projects": [
+    {
+      "id": "seed-sw-1",
+      "title": "Campus Ride Share",
+      "description": "A Next.js + PostgreSQL app that matches students heading the same way, with real-time seat updates over WebSockets.",
+      "link": "https://github.com/",
+      "category": "software",
+      "createdAt": "2026-01-10T00:00:00.000Z"
+    },
+    {
+      "id": "seed-sw-2",
+      "title": "Habit CLI",
+      "description": "A tiny Rust command-line tool for tracking daily habits, with streak stats and a plain-text storage format.",
+      "category": "software",
+      "createdAt": "2026-02-14T00:00:00.000Z"
+    },
+    {
+      "id": "seed-ds-1",
+      "title": "Coffee Shop Rebrand",
+      "description": "Logo, type system and packaging for a neighbourhood café. Bold outlines and a warm, hand-drawn palette.",
+      "link": "https://www.behance.net/",
+      "category": "design",
+      "createdAt": "2026-03-02T00:00:00.000Z"
+    },
+    {
+      "id": "seed-ds-2",
+      "title": "Budgeting App UI Kit",
+      "description": "A Figma component library and prototype for a student budgeting app, tested with five users over two rounds.",
+      "category": "design",
+      "createdAt": "2026-03-20T00:00:00.000Z"
+    },
+    {
+      "id": "seed-sec-1",
+      "title": "Home Lab SOC",
+      "description": "A virtualised home lab with pfSense, Wazuh and a Windows AD domain for practicing detection and incident response.",
+      "link": "https://github.com/",
+      "category": "security",
+      "createdAt": "2026-04-05T00:00:00.000Z"
+    },
+    {
+      "id": "seed-sec-2",
+      "title": "CTF Write-ups",
+      "description": "Notes and solutions from web exploitation and forensics challenges, focusing on the reasoning behind each step.",
+      "category": "security",
+      "createdAt": "2026-05-11T00:00:00.000Z"
+    }
+  ],
+  "skillCategories": [
+    {
+      "id": "seed-cat-lang",
+      "name": "Languages",
+      "skills": [
+        {
+          "id": "seed-sk-1",
+          "name": "TypeScript"
+        },
+        {
+          "id": "seed-sk-2",
+          "name": "Python"
+        },
+        {
+          "id": "seed-sk-3",
+          "name": "Java"
+        },
+        {
+          "id": "seed-sk-4",
+          "name": "SQL"
+        }
+      ]
+    },
+    {
+      "id": "seed-cat-tools",
+      "name": "Tools",
+      "skills": [
+        {
+          "id": "seed-sk-5",
+          "name": "Git"
+        },
+        {
+          "id": "seed-sk-6",
+          "name": "Figma"
+        },
+        {
+          "id": "seed-sk-7",
+          "name": "Docker"
+        },
+        {
+          "id": "seed-sk-8",
+          "name": "Linux"
+        }
+      ]
+    },
+    {
+      "id": "seed-cat-sec",
+      "name": "Security",
+      "skills": [
+        {
+          "id": "seed-sk-9",
+          "name": "Wireshark"
+        },
+        {
+          "id": "seed-sk-10",
+          "name": "Burp Suite"
+        },
+        {
+          "id": "seed-sk-11",
+          "name": "Nmap"
+        },
+        {
+          "id": "seed-sk-12",
+          "name": "Network Hardening"
+        }
+      ]
+    }
+  ],
+  "softSkills": [
+    {
+      "id": "seed-soft-1",
+      "name": "Communication",
+      "description": "Explaining technical ideas clearly to any audience."
+    },
+    {
+      "id": "seed-soft-2",
+      "name": "Teamwork",
+      "description": "Happy to pair, review, and share the load."
+    },
+    {
+      "id": "seed-soft-3",
+      "name": "Problem solving",
+      "description": "Breaking big, fuzzy problems into small, clear steps."
+    },
+    {
+      "id": "seed-soft-4",
+      "name": "Adaptability",
+      "description": "Comfortable switching between code, design and security."
+    },
+    {
+      "id": "seed-soft-5",
+      "name": "Time management",
+      "description": "Planning work so deadlines feel calm, not chaotic."
+    },
+    {
+      "id": "seed-soft-6",
+      "name": "Curiosity",
+      "description": "Always asking how things work, and how they break."
+    }
+  ],
+  "activities": [
+    {
+      "id": "seed-act-1",
+      "title": "CTF team member",
+      "organization": "University cybersecurity club",
+      "period": "2024 – Present",
+      "description": "Weekly practice sessions and team competitions in web exploitation and forensics."
+    },
+    {
+      "id": "seed-act-2",
+      "title": "Volunteer designer",
+      "organization": "Local community nonprofit",
+      "period": "2023",
+      "description": "Designed posters and social media graphics for fundraising events."
+    },
+    {
+      "id": "seed-act-3",
+      "title": "Workshop mentor",
+      "organization": "Community coding workshops",
+      "period": "2023 – 2024",
+      "description": "Helped beginners build and publish their first websites."
+    }
+  ]
+}
