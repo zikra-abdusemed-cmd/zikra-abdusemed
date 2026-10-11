@@ -48,7 +48,10 @@ middleware.ts            redirects unauthenticated /admin requests to /admin/log
 - Cursor: add `data-cursor-label="Text"` to any element to make the cursor morph into a labelled blob over it.
 - `prefers-reduced-motion` disables all motion; content is visible without JavaScript.
 
-## Deployment note
+## Deployment
 
-The JSON store needs a writable, persistent disk: a VPS, Railway/Render/Fly with a volume, or Docker with a mounted `data/` directory.
-Serverless hosts like Vercel have a read-only, ephemeral filesystem, so admin edits would not persist there. For Vercel, swap `lib/store.ts` for a hosted database (e.g. Turso/libSQL, Postgres); its exported functions are the only interface the rest of the app uses.
+For Vercel, create a **public Vercel Blob store** from the project's **Storage** tab and connect it to this project for Production (and Preview if needed). Vercel supplies the Blob credentials automatically. The app stores its editable content at `portfolio/content.json` and uploaded project photos in `portfolio/uploads/`.
+
+The content JSON and project photos are public, matching the public portfolio. Without a connected Blob store, the homepage uses `data/seed.json` and admin saves show a setup message. Local development continues to use `data/content.json` and `data/uploads/`.
+
+For other hosts, use a writable persistent volume and set `CONTENT_DIR` to its mount path.

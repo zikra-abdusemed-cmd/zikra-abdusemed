@@ -9,6 +9,7 @@
     "seed": "node scripts/seed.mjs"
   },
   "dependencies": {
+    "@vercel/blob": "^2.8.1",
     "next": "^15.5.26",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",

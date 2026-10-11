@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { Activity, Project, ProjectCategoryId, ProjectImage, SiteContent, SkillCategory, SoftSkill } from "./types";
+import { hasBlobStorage, readBlob, writeBlob } from "./blob-storage";
 
 /**
  * JSON-file content store.
@@ -16,6 +17,14 @@ const CONTENT_FILE = path.join(DATA_DIR, "content.json");
 const SEED_FILE = path.join(process.cwd(), "data", "seed.json");
 
 async function readContentFile(): Promise<Partial<SiteContent>> {
+  if (process.env.VERCEL && hasBlobStorage()) {
+    const data = await readBlob("portfolio/content.json");
+    if (data) return JSON.parse(new TextDecoder().decode(data)) as Partial<SiteContent>;
+    return JSON.parse(await readFile(SEED_FILE, "utf8")) as Partial<SiteContent>;
+  }
+  if (process.env.VERCEL) {
+    return JSON.parse(await readFile(SEED_FILE, "utf8")) as Partial<SiteContent>;
+  }
   try {
     return JSON.parse(await readFile(CONTENT_FILE, "utf8")) as Partial<SiteContent>;
   } catch (err) {
@@ -52,11 +61,15 @@ let writeQueue: Promise<unknown> = Promise.resolve();
 
 function mutate<T>(fn: (content: SiteContent) => T): Promise<T> {
   const run = async () => {
-    if (process.env.VERCEL) {
-      throw new Error("Admin edits need persistent database storage. The public site is using the bundled seed content.");
+    if (process.env.VERCEL && !hasBlobStorage()) {
+      throw new Error("Admin editing is not connected yet. In Vercel, create and connect a public Blob store, then redeploy.");
     }
     const content = await getContent();
     const result = fn(content);
+    if (process.env.VERCEL) {
+      await writeBlob("portfolio/content.json", JSON.stringify(content, null, 2), "application/json", true);
+      return result;
+    }
     const tmp = `${CONTENT_FILE}.${process.pid}.${Date.now()}.tmp`;
     await mkdir(DATA_DIR, { recursive: true });
     await writeFile(tmp, JSON.stringify(content, null, 2), "utf8");

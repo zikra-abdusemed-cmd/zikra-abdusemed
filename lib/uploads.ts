@@ -2,6 +2,7 @@ import "server-only";
 import { randomUUID } from "node:crypto";
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { deleteBlob, hasBlobStorage, readBlob, writeBlob } from "./blob-storage";
 
 /**
  * Project photos live in <content dir>/uploads so they persist alongside content.json
@@ -32,11 +33,18 @@ function sniff(b: Uint8Array): Ext | null {
 }
 
 export async function saveUpload(file: File): Promise<string> {
+  if (process.env.VERCEL && !hasBlobStorage()) {
+    throw new Error("Photo uploads are not connected yet. In Vercel, create and connect a public Blob store, then redeploy.");
+  }
   if (file.size > MAX_UPLOAD_BYTES) throw new Error("Photo must be 5 MB or smaller.");
   const bytes = new Uint8Array(await file.arrayBuffer());
   const ext = sniff(bytes);
   if (!ext) throw new Error("Photo must be a JPG, PNG, WebP or GIF.");
   const name = `${randomUUID()}.${ext}`;
+  if (process.env.VERCEL) {
+    await writeBlob(`portfolio/uploads/${name}`, bytes, TYPES[ext]);
+    return name;
+  }
   await mkdir(UPLOAD_DIR, { recursive: true });
   await writeFile(path.join(UPLOAD_DIR, name), bytes);
   return name;
@@ -44,11 +52,20 @@ export async function saveUpload(file: File): Promise<string> {
 
 export async function deleteUpload(name: string | undefined) {
   if (!name || !NAME_RE.test(name)) return;
+  if (process.env.VERCEL && hasBlobStorage()) {
+    await deleteBlob(`portfolio/uploads/${name}`);
+    return;
+  }
   await rm(path.join(UPLOAD_DIR, name), { force: true });
 }
 
 export async function readUpload(name: string) {
   if (!NAME_RE.test(name)) return null;
+  if (process.env.VERCEL && hasBlobStorage()) {
+    const data = await readBlob(`portfolio/uploads/${name}`);
+    if (!data) return null;
+    return { data, type: TYPES[name.split(".").pop() as Ext] };
+  }
   try {
     const data = await readFile(path.join(UPLOAD_DIR, name));
     return { data, type: TYPES[name.split(".").pop() as Ext] };
