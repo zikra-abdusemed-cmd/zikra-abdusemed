@@ -10,14 +10,14 @@ export function hasBlobStorage() {
 }
 
 export async function readBlob(pathname: string): Promise<Uint8Array | null> {
-  const blob = await get(pathname, { access: "public" });
+  const blob = await get(pathname, { access: "private" });
   if (blob?.statusCode !== 200 || !blob.stream) return null;
   return new Uint8Array(await new Response(blob.stream).arrayBuffer());
 }
 
 export async function writeBlob(pathname: string, data: string | Uint8Array, contentType: string, overwrite = false) {
   await put(pathname, typeof data === "string" ? data : Buffer.from(data), {
-    access: "public",
+    access: "private",
     addRandomSuffix: false,
     allowOverwrite: overwrite,
     contentType,

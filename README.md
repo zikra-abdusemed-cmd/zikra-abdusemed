@@ -50,8 +50,8 @@ middleware.ts            redirects unauthenticated /admin requests to /admin/log
 
 ## Deployment
 
-For Vercel, create a **public Vercel Blob store** from the project's **Storage** tab and connect it to this project for Production (and Preview if needed). Vercel supplies the Blob credentials automatically. The app stores its editable content at `portfolio/content.json` and uploaded project photos in `portfolio/uploads/`.
+For Vercel, create a **private Vercel Blob store** from the project's **Storage** tab and connect it to this project for Production (and Preview if needed). Vercel supplies the Blob credentials automatically. The app stores its editable content at `portfolio/content.json` and uploaded project photos in `portfolio/uploads/`. The content JSON stays private; project photos are streamed through the app's `/uploads/` route for display on the public portfolio.
 
-The content JSON and project photos are public, matching the public portfolio. Without a connected Blob store, the homepage uses `data/seed.json` and admin saves show a setup message. Local development continues to use `data/content.json` and `data/uploads/`.
+Blob objects are private; the app reads content server-side and serves project photos through its public `/uploads/` route. Without a connected Blob store, the homepage uses `data/seed.json` and admin saves show a setup message. Local development continues to use `data/content.json` and `data/uploads/`.
 
 For other hosts, use a writable persistent volume and set `CONTENT_DIR` to its mount path.

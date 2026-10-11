@@ -34,7 +34,7 @@ function sniff(b: Uint8Array): Ext | null {
 
 export async function saveUpload(file: File): Promise<string> {
   if (process.env.VERCEL && !hasBlobStorage()) {
-    throw new Error("Photo uploads are not connected yet. In Vercel, create and connect a public Blob store, then redeploy.");
+    throw new Error("Photo uploads are not connected yet. In Vercel, create and connect a private Blob store, then redeploy.");
   }
   if (file.size > MAX_UPLOAD_BYTES) throw new Error("Photo must be 5 MB or smaller.");
   const bytes = new Uint8Array(await file.arrayBuffer());

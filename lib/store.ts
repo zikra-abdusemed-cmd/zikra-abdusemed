@@ -62,7 +62,7 @@ let writeQueue: Promise<unknown> = Promise.resolve();
 function mutate<T>(fn: (content: SiteContent) => T): Promise<T> {
   const run = async () => {
     if (process.env.VERCEL && !hasBlobStorage()) {
-      throw new Error("Admin editing is not connected yet. In Vercel, create and connect a public Blob store, then redeploy.");
+      throw new Error("Admin editing is not connected yet. In Vercel, create and connect a private Blob store, then redeploy.");
     }
     const content = await getContent();
     const result = fn(content);
