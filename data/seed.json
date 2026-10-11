@@ -1,49 +1,281 @@
 {
   "projects": [
     {
-      "id": "seed-sw-1",
-      "title": "Campus Ride Share",
-      "description": "A Next.js + PostgreSQL app that matches students heading the same way, with real-time seat updates over WebSockets.",
-      "link": "https://github.com/",
+      "id": "1aee008f-5534-48b7-9697-8215e21e6217",
+      "createdAt": "2026-09-29T20:38:53.237Z",
+      "title": "Harar Food Packaging",
+      "description": "A minimalist product catalog website with a public view and admin panel",
       "category": "software",
-      "createdAt": "2026-01-10T00:00:00.000Z"
+      "link": "https://hararpackagingsupplies.vercel.app/",
+      "images": [
+        {
+          "name": "c764d941-f4ea-434d-a10c-c93c826b754b.png",
+          "w": 2880,
+          "h": 1622
+        }
+      ]
     },
     {
-      "id": "seed-sw-2",
-      "title": "Habit CLI",
-      "description": "A tiny Rust command-line tool for tracking daily habits, with streak stats and a plain-text storage format.",
+      "id": "a75b1bbc-0198-45a5-a6ae-cb536df0b459",
+      "createdAt": "2026-09-29T20:39:44.459Z",
+      "title": "Whisk Note",
+      "description": "A cozy, modern recipe notebook and baking assistant for home bakers with unit conversions and offline support",
       "category": "software",
-      "createdAt": "2026-02-14T00:00:00.000Z"
+      "link": "https://whisknote.netlify.app/",
+      "images": [
+        {
+          "name": "50102e6f-f962-4e0a-87be-101f30dd16f5.jpg",
+          "w": 591,
+          "h": 1280
+        },
+        {
+          "name": "8bbaaec7-d9bd-44d2-8ae8-6025ffc380c9.jpg",
+          "w": 591,
+          "h": 1280
+        },
+        {
+          "name": "ecc9022d-acec-44c6-8248-38a864579f2f.jpg",
+          "w": 591,
+          "h": 1280
+        },
+        {
+          "name": "340ec549-0560-4b51-b8bf-4e987b47f554.jpg",
+          "w": 591,
+          "h": 1280
+        },
+        {
+          "name": "e2b65b0c-9cef-48ef-b061-6c735840c65b.jpg",
+          "w": 591,
+          "h": 1280
+        },
+        {
+          "name": "cf17c28b-4f0c-4643-b0f3-15250a649c21.jpg",
+          "w": 591,
+          "h": 1280
+        },
+        {
+          "name": "a46fbe9e-73df-42c4-83f2-fb04d397903a.jpg",
+          "w": 591,
+          "h": 1280
+        }
+      ]
     },
     {
-      "id": "seed-ds-1",
-      "title": "Coffee Shop Rebrand",
-      "description": "Logo, type system and packaging for a neighbourhood café. Bold outlines and a warm, hand-drawn palette.",
-      "link": "https://www.behance.net/",
+      "id": "0d02c822-65a1-4492-890a-ef5f8e63d948",
+      "createdAt": "2026-09-29T20:40:22.729Z",
+      "title": "Sweets of Harar Bot",
+      "description": "customer service not where users can order through their telegram and the admin verified the order and get list of customers and their detail on a google sheet to help track orders.",
+      "category": "software",
+      "images": [
+        {
+          "name": "5e76416f-2fe3-4480-a008-7bcc846bc077.png",
+          "w": 1336,
+          "h": 1468
+        }
+      ]
+    },
+    {
+      "id": "3084057f-2d88-4f12-be6f-5e7a2b942c71",
+      "createdAt": "2026-09-29T20:48:37.738Z",
+      "title": "Dormitory Management System",
+      "description": "A Dorm management system built for CTBE, AAU. Helps students apply for dorm while the admin and super admin manage the system",
+      "category": "software",
+      "images": [
+        {
+          "name": "02737d1c-ebd4-4806-a70b-ab1c1d39d2fc.jpg",
+          "w": 1917,
+          "h": 957
+        }
+      ]
+    },
+    {
+      "id": "b969e5d5-5e41-4b15-bbcd-a98c9088a083",
+      "createdAt": "2026-09-29T20:48:55.278Z",
+      "title": "Network Security & Infrastructure Design",
+      "description": "Designed a network infrastructure for 3 buildings at Harari Supreme Court",
+      "category": "security"
+    },
+    {
+      "id": "2041e113-ce6d-4af6-ba5a-4ee6db5443b9",
+      "createdAt": "2026-09-29T20:51:22.301Z",
+      "title": "Cognitix",
+      "description": "start up",
       "category": "design",
-      "createdAt": "2026-03-02T00:00:00.000Z"
+      "images": [
+        {
+          "name": "60b086d0-2732-4a3a-b856-9f2519e436ee.png",
+          "w": 2880,
+          "h": 11690
+        }
+      ]
     },
     {
-      "id": "seed-ds-2",
-      "title": "Budgeting App UI Kit",
-      "description": "A Figma component library and prototype for a student budgeting app, tested with five users over two rounds.",
+      "id": "ac93314b-8fe4-4a6c-b502-4e0a3f21e6d2",
+      "createdAt": "2026-09-29T20:52:33.518Z",
+      "title": "Coldewell Banker",
+      "description": "real estat",
       "category": "design",
-      "createdAt": "2026-03-20T00:00:00.000Z"
+      "images": [
+        {
+          "name": "31251b2e-6b00-4ebe-8221-78c7d4f9f3a9.jpg",
+          "w": 1845,
+          "h": 1263
+        }
+      ]
     },
     {
-      "id": "seed-sec-1",
-      "title": "Home Lab SOC",
-      "description": "A virtualised home lab with pfSense, Wazuh and a Windows AD domain for practicing detection and incident response.",
-      "link": "https://github.com/",
-      "category": "security",
-      "createdAt": "2026-04-05T00:00:00.000Z"
+      "id": "67a427fd-d05c-45bc-afaa-817bb89fa784",
+      "createdAt": "2026-09-29T20:52:44.649Z",
+      "title": "Poster Designs",
+      "description": "Posters I designed for Harar Dev   Center",
+      "category": "design",
+      "images": [
+        {
+          "name": "ff6584c6-421b-4b0c-b7bb-945ad4660b76.png",
+          "w": 1080,
+          "h": 1350
+        },
+        {
+          "name": "185c27c5-f365-4e4b-9cf6-84b3e463a799.png",
+          "w": 1587,
+          "h": 2245
+        },
+        {
+          "name": "154745c8-4b00-4ea5-93cc-96032c685b59.png",
+          "w": 1587,
+          "h": 2245
+        }
+      ]
     },
     {
-      "id": "seed-sec-2",
-      "title": "CTF Write-ups",
-      "description": "Notes and solutions from web exploitation and forensics challenges, focusing on the reasoning behind each step.",
+      "id": "ca6e1113-eddf-4090-ac1c-22e20652cac7",
+      "createdAt": "2026-09-29T20:53:04.042Z",
+      "title": "VW Beetles Landing Page",
+      "description": "A conceptual design for VW beetles' web design",
+      "category": "design",
+      "images": [
+        {
+          "name": "ffb3297f-ce20-4b05-9600-4b6e1c942179.png",
+          "w": 1440,
+          "h": 1007
+        }
+      ]
+    },
+    {
+      "id": "bd828ec0-b201-4c97-9189-47ac18303d75",
+      "createdAt": "2026-09-29T20:53:38.171Z",
+      "title": "HDC",
+      "description": "HDC",
+      "category": "software",
+      "link": "https://harar-dev-center-final.vercel.app/",
+      "images": [
+        {
+          "name": "94376c65-b76a-4a00-98c5-f12aa00a3d3d.png",
+          "w": 2880,
+          "h": 1622
+        }
+      ]
+    },
+    {
+      "id": "f582c3da-d764-4629-af36-9d0f5ea324dd",
+      "createdAt": "2026-09-29T20:54:28.528Z",
+      "title": "Do the Damn Thing",
+      "description": "A focus web app built for people with ADHD with voice reminders to get back to work",
+      "category": "software",
+      "images": [
+        {
+          "name": "fe34bea6-e58c-4b7b-9868-e55c11536b8f.png",
+          "w": 2880,
+          "h": 1624
+        }
+      ]
+    },
+    {
+      "id": "38e05db6-c865-48c4-9b4f-d66651c39b09",
+      "createdAt": "2026-09-30T09:00:54.870Z",
+      "title": "Gaming console",
+      "description": "concept design",
+      "category": "design",
+      "images": [
+        {
+          "name": "062997ae-daa3-4856-babd-b7e8892b4f67.png",
+          "w": 1440,
+          "h": 1024
+        }
+      ]
+    },
+    {
+      "id": "b818e876-0798-4ebd-8aef-5a809f5634e1",
+      "createdAt": "2026-09-30T09:05:27.688Z",
+      "title": "Hamroz Event Photography and Videography",
+      "description": "A landing page for an event photography and videography company",
+      "category": "design",
+      "images": [
+        {
+          "name": "1f265d1c-c33a-4a54-b4af-ea9214744760.png",
+          "w": 1440,
+          "h": 1012
+        }
+      ]
+    },
+    {
+      "id": "3a88e8d9-867b-48ea-9735-66d71c39a041",
+      "createdAt": "2026-10-02T09:51:16.823Z",
+      "title": "INSA-check",
+      "description": "It is an npm package that audits websites and local source code against INSA’s Secure Website Management Standard checklist.\r\n\r\nFor code scanning, it can analyze Python, JavaScript/TypeScript, PHP, Java, C#, Ruby, and Go without running or uploading your code. It then gives you automated results and flags the things that still need human review.",
       "category": "security",
-      "createdAt": "2026-05-11T00:00:00.000Z"
+      "link": "https://insa-check-web-landing.vercel.app/",
+      "images": [
+        {
+          "name": "68682996-fae0-4482-a962-942c9111f559.png",
+          "w": 2880,
+          "h": 1620
+        },
+        {
+          "name": "6ce8db3b-aa01-42ee-82a2-c3c2b434bb47.png",
+          "w": 2880,
+          "h": 1620
+        },
+        {
+          "name": "de74439f-8fd7-4291-986d-1eb4ed4c52f3.png",
+          "w": 2880,
+          "h": 1620
+        },
+        {
+          "name": "31c4e375-f208-4170-bbf7-ce22eee25e9b.png",
+          "w": 2880,
+          "h": 1620
+        }
+      ]
+    },
+    {
+      "id": "ef2971a1-c853-47f9-befd-aa665eb1c262",
+      "createdAt": "2026-10-02T09:51:57.123Z",
+      "title": "mini me",
+      "description": "An Avatar maker to add to any website using a snippet of code",
+      "category": "software",
+      "link": "https://mini-me-teal.vercel.app/",
+      "images": [
+        {
+          "name": "ab19572d-37a4-460d-8b8d-818c18a2979f.png",
+          "w": 2880,
+          "h": 1626
+        }
+      ]
+    },
+    {
+      "id": "133ede89-b8a1-4de6-8fc7-9328813c39f2",
+      "createdAt": "2026-10-11T11:30:01.946Z",
+      "title": "Grad Countdown",
+      "description": "A widget that lives in your menu bar or system tray and counts down to graduation. It tracks your events and to-dos and nudges you with notifications.\r\n\r\nBuilt with Electron and plain HTML, CSS and JavaScript. works on mac, windows and linux",
+      "category": "software",
+      "images": [
+        {
+          "name": "a8909928-731d-4661-a3bb-d70fdf9d8969.jpg",
+          "w": 2560,
+          "h": 1600
+        }
+      ]
     }
   ],
   "skillCategories": [
@@ -66,6 +298,10 @@
         {
           "id": "seed-sk-4",
           "name": "SQL"
+        },
+        {
+          "id": "local-skill-nextjs",
+          "name": "Next.js"
         }
       ]
     },
@@ -148,25 +384,39 @@
   ],
   "activities": [
     {
-      "id": "seed-act-1",
-      "title": "CTF team member",
-      "organization": "University cybersecurity club",
-      "period": "2024 – Present",
-      "description": "Weekly practice sessions and team competitions in web exploitation and forensics."
-    },
-    {
-      "id": "seed-act-2",
-      "title": "Volunteer designer",
-      "organization": "Local community nonprofit",
-      "period": "2023",
-      "description": "Designed posters and social media graphics for fundraising events."
-    },
-    {
       "id": "seed-act-3",
       "title": "Workshop mentor",
       "organization": "Community coding workshops",
       "period": "2023 – 2024",
       "description": "Helped beginners build and publish their first websites."
+    },
+    {
+      "id": "52c8be89-2229-47d5-a8cb-5c2bc9206ae5",
+      "title": "Founder/Mentor",
+      "organization": "Harar Dev Center",
+      "period": "2025 - Present",
+      "description": "NGO"
+    },
+    {
+      "id": "43ad8703-94a8-49a0-9d3e-cd92fbe63cfa",
+      "title": "Executive Team",
+      "organization": "AAU AI and Robotics",
+      "period": "2025 - Present",
+      "description": "club"
+    },
+    {
+      "id": "ed043319-912b-4c85-8736-15ba67846411",
+      "title": "Mentor",
+      "organization": "Thrive Club",
+      "period": "2025",
+      "description": "mentor"
+    },
+    {
+      "id": "2fe7e5e1-57c9-4921-a405-e42cd17c964b",
+      "title": "Developer / Graphic Designer/ Video Editor",
+      "organization": "Ethioadvice",
+      "period": "2025 - Present",
+      "description": "work"
     }
   ]
 }

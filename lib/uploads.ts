@@ -63,13 +63,19 @@ export async function readUpload(name: string) {
   if (!NAME_RE.test(name)) return null;
   if (process.env.VERCEL && hasBlobStorage()) {
     const data = await readBlob(`portfolio/uploads/${name}`);
-    if (!data) return null;
-    return { data, type: TYPES[name.split(".").pop() as Ext] };
+    if (data) return { data, type: TYPES[name.split(".").pop() as Ext] };
   }
   try {
     const data = await readFile(path.join(UPLOAD_DIR, name));
     return { data, type: TYPES[name.split(".").pop() as Ext] };
   } catch {
-    return null;
+    // Bundled project photos keep the public portfolio complete before Blob is connected.
+    if (!process.env.VERCEL) return null;
+    try {
+      const data = await readFile(path.join(process.cwd(), "public", "uploads", name));
+      return { data, type: TYPES[name.split(".").pop() as Ext] };
+    } catch {
+      return null;
+    }
   }
 }
